@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Caça palavras</title>
+</head>
+<body>
+    <!--
+    <input type="button" onclick="getAllWords()" value="Ver palavras">
+    <p id="words"></p>
+    <p id="success"></p>
+    -->
+    <form action="{% url 'words' %}" method="get">
+        <input type="submit" id="get_words" value="Buscar palavras">
+    </form>
+    <!--
+    <form action="{% url 'words' %}" method="post">
+        {% csrf_token %}
+        {{ form.word.errors }}
+        {{ form.as_p }} é possível renderizar o formulário direto do django, as labels para cada campo serão as mesmas das models
+        <label for="word">Adicione uma nova palavra: </label><br>
+        <input type="text" id="word" name="word"><br>
+        <input type="submit" value="Add">
+    </form>
+    -->
+    <!--https://docs.djangoproject.com/en/3.2/topics/forms/-->
+    <!--https://developer.mozilla.org/pt-BR/docs/Learn/Server-side/Django/Forms
+        Renderizando o formulário manualmente para ter controle
+        {{ form.word.errors }} -> coloca os erros do campo do formulário,
+        sintaxe: {{ form.field.error }} . Esse formulário só tem o campo word
+        id_word -> necessário em label (for) e em input (id) para o django saber
+        qual o campo para fazer as validações e salvar informações, nesse caso o campo
+        word do formulário.
+        sintaxe: id_<field>. Para fazer essa relação é necessário que se faça id_nome_campo (id_<field>)
+        de cada campo do formulário.
+    -->
+
+    <form action="{% url 'words' %}" method="post">
+        {% csrf_token %}
+        <!--{{ form.word.label }} esse campo só executado quando o form é enviado, renderizando manualmente
+        a label, o mesmo pode ser feito com help_text e errors em {{ form.word.errors }}-->
+        {{ form.word.errors }}
+        <label for="id_word">Adionar uma nova palavra.</label><br>
+        <input type="text" id="id_word" name="word" placeholder="Ex: Casa"><br>
+        <input type="submit" value="Add">
+    </form>
+
+</body>
+<script src="static/js/index.js"></script>
+</html>
