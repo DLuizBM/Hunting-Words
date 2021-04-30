@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse
 from .models import Word
 from .forms import WordModelForm
+import json
 from app.searchword.Base import base_input
 # quando se utiliza um pacote externo, deve-se colocar todo o caminho desde a raiz
 # nesse caso, começa em app
@@ -9,11 +10,20 @@ from app.searchword.Base import base_input
 def index(request):
     if request.method == "POST":
         print("Post")
-        print(request.POST.get('input'))
-        context = {
-            'form': 'dica'
-        }
-        return HttpResponse(context)
+        print(request.body)
+        body = json.loads(request.body) # deserializa o request.body em um objeto python ou outro tipo, dependendo
+                                        # do que é enviado, consultar a tabela de conversão do loads
+        print(body)
+        print(base_input(body.get('caracteres')))
+        return HttpResponse(body)
+    """
+    https://stackoverflow.com/questions/25791913/querydict-always-empty-from-ajax-post
+    request.body = django não desserializa JSON payloads(o que é útil do que é transmitido) por si só, request.POST é para dados
+    enviados por post do form html. request.body pega toda a transmissão, mas o programador deve desserializar a informação
+    request.POST traz <QueryDict: {}>, pois não desserializa a informação
+    request.body traz b'informação', que é uma bytestring, usada para imagens binárias, por exemplo.
+    
+    """
     '''
     render, envia/renderiza a página html, ou seja, o código html, fazendo com que a página
     seja mostrada para o usuário. 
@@ -24,7 +34,6 @@ def index(request):
     pegava toda a página html e colocava no parágrafo de id "words", renderizando nesse parágrafo
     a página toda, navamente.
     '''
-    print(request.GET)
     return render(request, 'index.html')
 
 

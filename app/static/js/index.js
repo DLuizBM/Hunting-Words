@@ -16,9 +16,17 @@ function getAllWords(){
             console.log(xhttp.responseText)
         }
     }
-    xhttp.open("GET", "http://localhost:8000/possible_words?caracters=Ola mundo", true);
-    //xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    //xhttp.setRequestHeader("X-CSRFToken", getCsrfToken());
+    //xhttp.open("GET", "http://localhost:8000/possible_words?caracters=Olá mundo", true);
+    //xhttp.send();
+    //é possível passar informações por um get, como no exemplo acima. possible_words é a rota, caracters é a chave e Olá mundo o valor
+    //é possível passar diversar chaves e valores, na view é possível pegar cada uma.
+    xhttp.open("POST", "http://localhost:8000", true);
+    xhttp.setRequestHeader("X-CSRFToken", getCsrfToken());
+    xhttp.setRequestHeader("Content-type", "application/json"); // mandando múltiplos headers
     console.log('CARAC ' + getCaracters())
-    xhttp.send();
+    const json = {
+        'caracteres': getCaracters()
+    }
+    xhttp.send(JSON.stringify(json));
+
 }
