@@ -1,11 +1,12 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Caça palavras</title>
 </head>
 <body>
+    <p id="words"></p>
     <!--
     <input type="button" onclick="getAllWords()" value="Ver palavras">
     <p id="words"></p>
@@ -45,7 +46,22 @@
         <input type="text" id="id_word" name="word" placeholder="Ex: Casa"><br>
         <input type="submit" value="Add">
     </form>
-
+<!--
+    <form action="{% url 'index' %}" method="post">
+        {% csrf_token %}
+        <label for="input">Insira as letras para buscar possíveis palavras</label><br>
+        <input type="text" id="input" name="input" placeholder="Ex: asdfghj">
+        name: é a tag que manda o conteúdo para o dicionário no django, se na view
+        quisermos pegar o conteúdo, basta pegar o dicionário com chave que contém o nome inserido
+        em name, nesse exeplo input
+        <input type="submit" value="Buscar" onclick="alert('Olá mundo')">
+        {% if form.is_valid %}
+            <p> Hello {{ n }} </p>
+        {% endif %}
+    </form>-->
+   <label>Digite os caracters para buscar palavras</label><br>
+    <input type="text" id="caracters" name="caracters" placeholder="Ex: asdfj" value=""><br>
+    <input type="button" onclick="getAllWords()" value="Ver palaras">
 </body>
 <script src="static/js/index.js"></script>
 </html>
