@@ -9,13 +9,16 @@ from app.searchword.Base import base_input
 
 def index(request):
     if request.method == "POST":
-        print("Post")
-        print(request.body)
-        body = json.loads(request.body) # deserializa o request.body em um objeto python ou outro tipo, dependendo
-                                        # do que é enviado, consultar a tabela de conversão do loads
-        print(body)
-        print(base_input(body.get('caracteres')))
-        return HttpResponse(body)
+        body = json.loads(request.body)
+        # deserializa o request.body em um objeto python ou outro tipo, dependendo
+        # do que é enviado, consultar a tabela de conversão do loads
+        result = base_input(body.get('caracters'))
+        context = {
+            'words': result[0],
+            'caracters': result[1]
+        }
+        passToJson = json.dumps(context)
+        return HttpResponse(passToJson)
     """
     https://stackoverflow.com/questions/25791913/querydict-always-empty-from-ajax-post
     request.body = django não desserializa JSON payloads(o que é útil do que é transmitido) por si só, request.POST é para dados
@@ -32,7 +35,7 @@ def index(request):
     document.getElementById("words").innerHTML = xhttp.responseText;
     recebia o render como resposta. Como o render mandava toda a página html, a linha do javascript
     pegava toda a página html e colocava no parágrafo de id "words", renderizando nesse parágrafo
-    a página toda, navamente.
+    a página toda, novamente.
     '''
     return render(request, 'index.html')
 
